@@ -10,6 +10,7 @@ import LayoutWrapper from "@src/@core/layouts/components/layout-wrapper";
 // ** Route Components
 import PublicRoute from "@components/routes/PublicRoute";
 
+
 // ** Utils
 import { isObjEmpty } from "@utils";
 
@@ -31,8 +32,9 @@ const Login = lazy(() => import("../../views/Login"));
 const Register = lazy(() => import("../../views/Register"));
 const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
 const Error = lazy(() => import("../../views/Error"));
-const CategoryFrom = lazy(()=>import("../../views/CategoryForm"))
-const CategoryTable = lazy(()=>import("../../views/CategoryTable"))
+const CategoryFrom = lazy(() => import("../../views/CategoryForm"))
+const CategoryTable = lazy(() => import("../../views/CategoryTable"))
+const GameTable = lazy(() => import("../../views/Gametable"))
 // ** Merge Routes
 const Routes = [
   {
@@ -49,12 +51,16 @@ const Routes = [
     element: <SecondPage />,
   },
   {
-    path:"/categoryform",
-    element:<CategoryFrom/>,
+    path: "/categoryform",
+    element: <CategoryFrom />,
   },
   {
-    path:"/category",
-    element:<CategoryTable/>,
+    path: "/category",
+    element: <CategoryTable />,
+  },
+  {
+    path: "/game",
+    element: <GameTable />,
   },
   {
     path: "/login",
@@ -120,7 +126,7 @@ const MergeLayoutRoutes = (layout, defaultLayout) => {
             // eslint-disable-next-line multiline-ternary
             isObjEmpty(route.element.props) && isBlank === false
               ? // eslint-disable-next-line multiline-ternary
-                LayoutWrapper
+              LayoutWrapper
               : Fragment;
 
           route.element = (

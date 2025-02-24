@@ -61,7 +61,7 @@ const ValidationOnChange = (props) => {
                 </div>
             )
         }
-    }       
+    }
 
     const handleReset = () => {
         reset({

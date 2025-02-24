@@ -14,23 +14,27 @@ export default [
     navLink: "/second-page",
   },
   {
-    id:"LoginPage",
-    title:"Login",
+    id: "LoginPage",
+    title: "Login",
     navLink: "/login",
   },
   {
-    id:"RegisterPage",
-    title:"Register",
+    id: "RegisterPage",
+    title: "Register",
     navLink: "/register",
   },
   {
-    id:"CategoryForm",
-    title:"CategoryForm",
-    navLink:'/categoryform'
+    id: "CategoryForm",
+    title: "CategoryForm",
+    navLink: '/categoryform'
   },
   {
-    id:"Category",
-    title:"Category",
-    navLink:'/category',
+    id: "Category",
+    title: "Category",
+    navLink: '/category',
+  }, {
+    id: "Game",
+    title: "Game",
+    navLink: '/game',
   }
 ];

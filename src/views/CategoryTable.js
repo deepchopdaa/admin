@@ -31,7 +31,7 @@ const CategoryTable = () => {
     // ** States
     const [currentPage, setCurrentPage] = useState(0)
     const [data, setdata] = useState();
-    
+
     // ** Function to handle Pagination
     const handlePagination = page => {
         setCurrentPage(page.selected)
@@ -99,7 +99,7 @@ const CategoryTable = () => {
             reorder: true,
             sortable: true,
             minwidth: '100px',
-            maxWidth: '300px',
+            maxWidth: '200px',
             selector: row => row.name
         },
         {
@@ -107,7 +107,7 @@ const CategoryTable = () => {
             reorder: true,
             sortable: true,
             minwidth: '150px',
-            maxWidth: '800px',
+            maxWidth: '700px',
             selector: row => row.description
         },
         {
@@ -207,7 +207,7 @@ const CategoryTable = () => {
                     <Button color="secondary" onClick={handleClose}>
                         No
                     </Button>
-                    <Button color="primary" onClick={DeleteRecord}> 
+                    <Button color="primary" onClick={DeleteRecord}>
                         Yes
                     </Button>
                 </Modal.Footer>

@@ -94,20 +94,44 @@ const CategoryTable = () => {
 
     const reOrderColumns = [
         {
-            name: 'Name',
+            name: 'Title',
             reorder: true,
             sortable: true,
             minwidth: '100px',
-            maxWidth: '300px',
-            selector: row => row.name
+            maxWidth: '150px',
+            selector: row => row.title
         },
         {
-            name: 'description',
+            name: 'category',
             reorder: true,
             sortable: true,
-            minwidth: '150px',
-            maxWidth: '800px',
-            selector: row => row.description
+            minwidth: '100px',   
+            maxWidth: '150px',
+            selector: row => row.category
+        },
+        {
+            name: 'price',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',   
+            maxWidth: '150px',
+            selector: row => row.price
+        },
+        {
+            name: 'image',
+            reorder: true,
+            sortable: true,
+            minwidth: '150px',   
+            maxWidth: '250px',
+            selector: row => row.image
+        },
+        {
+            name: 'rating',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',   
+            maxWidth: '150px',
+            selector: row => row.rating
         },
         {
             name: "Update",

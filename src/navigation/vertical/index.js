@@ -36,5 +36,9 @@ export default [
     id: "Game",
     title: "Game",
     navLink: '/game',
+  }, {
+    id: "GameFrom",
+    title: "GameFrom",
+    navLink: '/gameform',
   }
 ];

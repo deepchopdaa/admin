@@ -16,6 +16,7 @@ import { Edit, Trash2 } from "react-feather";
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedback } from 'reactstrap'
 import axios from 'axios'
 
+
 const CategoryTable = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);

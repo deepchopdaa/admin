@@ -35,6 +35,8 @@ const Error = lazy(() => import("../../views/Error"));
 const CategoryFrom = lazy(() => import("../../views/CategoryForm"))
 const CategoryTable = lazy(() => import("../../views/CategoryTable"))
 const GameTable = lazy(() => import("../../views/Gametable"))
+const GameFrom = lazy(() => import("../../views/GameForm"))
+
 // ** Merge Routes
 const Routes = [
   {
@@ -61,6 +63,10 @@ const Routes = [
   {
     path: "/game",
     element: <GameTable />,
+  },
+  {
+    path: "/gameform",
+    element: <GameFrom />,
   },
   {
     path: "/login",

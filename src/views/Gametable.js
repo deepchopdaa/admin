@@ -15,6 +15,7 @@ import { Edit, Trash2 } from "react-feather";
 // import { Button, Card, CardHeader, CardTitle } from 'reactstrap'
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedback } from 'reactstrap'
 import axios from 'axios'
+import { title } from 'process';
 
 const CategoryTable = () => {
     const [show1, setShow1] = useState(false);
@@ -24,6 +25,10 @@ const CategoryTable = () => {
     const [updateid, setupdateid] = useState();
     const [name, setname] = useState();
     const [description, setdescription] = useState();
+    const [price, setprice] = useState();
+    const [category, setCategory] = useState();
+    const [rating, setrating] = useState();
+    const [image, setimage] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [deleteid, setdeleteid] = useState(null)
@@ -105,7 +110,7 @@ const CategoryTable = () => {
             name: 'category',
             reorder: true,
             sortable: true,
-            minwidth: '100px',   
+            minwidth: '100px',
             maxWidth: '150px',
             selector: row => row.category
         },
@@ -113,7 +118,7 @@ const CategoryTable = () => {
             name: 'price',
             reorder: true,
             sortable: true,
-            minwidth: '100px',   
+            minwidth: '100px',
             maxWidth: '150px',
             selector: row => row.price
         },
@@ -121,7 +126,7 @@ const CategoryTable = () => {
             name: 'image',
             reorder: true,
             sortable: true,
-            minwidth: '150px',   
+            minwidth: '150px',
             maxWidth: '250px',
             selector: row => row.image
         },
@@ -129,7 +134,7 @@ const CategoryTable = () => {
             name: 'rating',
             reorder: true,
             sortable: true,
-            minwidth: '100px',   
+            minwidth: '100px',
             maxWidth: '150px',
             selector: row => row.rating
         },
@@ -164,13 +169,25 @@ const CategoryTable = () => {
     /* Update form */
 
     const initialvalue = {
-        name: name,
+        title: title,
+        category: category,
+        image: image,
+        rating: rating,
+        price: price,
         description: description
     }
 
     const validationSchema = Yup.object().shape({
-        name: Yup.string()
-            .required('Required name'),
+        title: Yup.string()
+            .required('Required title'),
+        category: Yup.string()
+            .required('Required category'),
+        image: Yup.string()
+            .required('Required image'),
+        rating: Yup.string()
+            .required('Required rating'),
+        price: Yup.string()
+            .required('Required price'),
         description: Yup.string()
             .required('Required description'),
     });
@@ -249,13 +266,23 @@ const CategoryTable = () => {
                     <Formik initialValues={initialvalue} validationSchema={validationSchema} onSubmit={updateRecord}>
                         <Form>
                             <div className="mb-3">
-                                <label className="mb-1">Category Name</label>
+                                <label className="mb-1">Title </label>
                                 <Field
                                     type="text"
-                                    name="name"
+                                    name="title"
                                     className="form-control"
                                 />
-                                <ErrorMessage name="name" component="div" className="text-danger" />
+                                <ErrorMessage name="title" component="div" className="text-danger" />
+                            </div>
+
+                            <div className="mb-3">
+                                <label className="mb-1">Category </label>
+                                <Field
+                                    type="text"
+                                    name="category"
+                                    className="form-control"
+                                />
+                                <ErrorMessage name="category" component="div" className="text-danger" />
                             </div>
                             <div className="mb-3">
                                 <label className="mb-1">Description</label>
@@ -266,6 +293,34 @@ const CategoryTable = () => {
                                 />
                                 <ErrorMessage name="description" component="div" className="text-danger" />
                             </div>
+                            <div className="mb-3">
+                                <label className="mb-1">price </label>
+                                <Field
+                                    type="text"
+                                    name="price"
+                                    className="form-control"
+                                />
+                                <ErrorMessage name="price" component="div" className="text-danger" />
+                            </div>
+                            <div className="mb-3">
+                                <label className="mb-1">Image </label>
+                                <Field
+                                    type="text"
+                                    name="image"
+                                    className="form-control"
+                                />
+                                <ErrorMessage name="image" component="div" className="text-danger" />
+                            </div>
+                            <div className="mb-3">
+                                <label className="mb-1">Rating </label>
+                                <Field
+                                    type="text"
+                                    name="rating"
+                                    className="form-control"
+                                />
+                                <ErrorMessage name="rating" component="div" className="text-danger" />
+                            </div>
+
                             <Button color='dark' type='submit' onClick={updateRecord}>Update</Button>
                         </Form>
                     </Formik>

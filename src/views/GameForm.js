@@ -30,6 +30,7 @@ const GameForm = () => {
             try {
                 const response = await axios.get("http://localhost:3100/category/getcategory");
                 setCategory(response.data);
+                console.log(response)
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }

@@ -17,18 +17,20 @@ import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedba
 import axios from 'axios'
 import { title } from 'process';
 
-const CategoryTable = () => {
+const GameTable = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
     const handleShow1 = () => setShow1(true);
     const [show, setShow] = useState(false);
+    const [categorydata, setcategorydata] = useState(null);
     const [updateid, setupdateid] = useState();
-    const [name, setname] = useState();
-    const [description, setdescription] = useState();
+    const [title, settitle] = useState();
+    const [category, setcategory] = useState();
     const [price, setprice] = useState();
-    const [category, setCategory] = useState();
+    const [image, setimage] = useState(null);
     const [rating, setrating] = useState();
-    const [image, setimage] = useState();
+    const [description, setdescription] = useState();
+    const [deleteitem, setdeleteitem] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [deleteid, setdeleteid] = useState(null)
@@ -41,20 +43,36 @@ const CategoryTable = () => {
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
+    console.log(categorydata, "categorydatacategorydatacategorydatacategorydata")
     const handleEdit = (row) => {
         console.log("Edit clicked for:", row);
         setupdateid(row._id)
-        setname(row.name)
+        settitle(row.title)
+        setcategory(row.category)
+        setprice(row.price)
+        setimage(row.image)
+        setrating(row.rating)
         setdescription(row.description)
         handleShow1();
     };
 
-    const updateRecord = async (value) => {
+    const updateRecord = async (data) => {
         try {
-            console.log(value);
+            console.log(data);
+            const formData = new FormData();
+            formData.append("title", data?.title);
+            formData.append("category", data?.category);
+            formData.append("description", data?.description);
+            formData.append("price", data?.price);
+            formData.append("rating", data?.rating);
+
+            // Append the file correctly
+            if (data?.image && data?.image.length > 0) {
+                formData.append("image", data?.image.file); // Correct way to send file
+            }
             console.log(updateid)
-            await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, value)
+            console.log(data.image)
+            await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, formData)
             console.log("Record updated sucessfully")
             handleClose(false);
         } catch (e) {
@@ -64,6 +82,19 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
+            console.log(deleteid)
+            console.log(deleteitem.title)
+            const formData = new FormData();
+            formData.append("title", deleteitem.title);
+            formData.append("category", deleteitem.category);
+            formData.append("description", deleteitem.description);
+            formData.append("price", deleteitem.price);
+            formData.append("rating", deleteitem.rating);
+
+            // Append the file correctlys
+            if (data.image && data.image.length > 0) {
+                formData.append("image", deleteitem.image[0]); // Correct way to send file
+            }
             await axios.delete(`http://localhost:3100/game/deleteGame/${deleteid}`)
             console.log("Record deleted sucessfully")
             handleClose();
@@ -77,14 +108,21 @@ const CategoryTable = () => {
         setdata(responce.data)
         console.log(responce.data);
     }
-
+    const categoryget = async () => {
+        const responsecategory = await axios.get("http://localhost:3100/category/getcategory")
+        setcategorydata(responsecategory.data);
+        console.log(categorydata)
+        console.log(responsecategory.data)
+    }
     const addrecord = () => {
-        navigate("/categoryform");
+        navigate("/gameform");
     }
 
     const handleDelete = (row) => {
         console.log("Delete clicked for:", row);
         setdeleteid(row._id);
+        setdeleteitem(row)
+        console.log(deleteitem)
         handleShow();
         get();
     };
@@ -92,6 +130,7 @@ const CategoryTable = () => {
     useEffect(() => {
         try {
             get();
+            categoryget();
         } catch (e) {
             console.log("data not fatched sucessfully")
         }
@@ -129,6 +168,14 @@ const CategoryTable = () => {
             minwidth: '150px',
             maxWidth: '250px',
             selector: row => row.image
+        },
+        {
+            name: 'description',
+            reorder: true,
+            sortable: true,
+            minwidth: '150px',
+            maxWidth: '250px',
+            selector: row => row.description
         },
         {
             name: 'rating',
@@ -171,10 +218,10 @@ const CategoryTable = () => {
     const initialvalue = {
         title: title,
         category: category,
+        description: description,
+        price: price,
         image: image,
         rating: rating,
-        price: price,
-        description: description
     }
 
     const validationSchema = Yup.object().shape({
@@ -182,14 +229,14 @@ const CategoryTable = () => {
             .required('Required title'),
         category: Yup.string()
             .required('Required category'),
-        image: Yup.string()
+        description: Yup.string()
+            .required('Required description'),
+        price: Yup.string()
+            .required('Required price'),
+        image: Yup.mixed()
             .required('Required image'),
         rating: Yup.string()
             .required('Required rating'),
-        price: Yup.string()
-            .required('Required price'),
-        description: Yup.string()
-            .required('Required description'),
     });
 
     // ** Custom Pagination
@@ -266,7 +313,7 @@ const CategoryTable = () => {
                     <Formik initialValues={initialvalue} validationSchema={validationSchema} onSubmit={updateRecord}>
                         <Form>
                             <div className="mb-3">
-                                <label className="mb-1">Title </label>
+                                <label className="mb-1">Title</label>
                                 <Field
                                     type="text"
                                     name="title"
@@ -274,27 +321,32 @@ const CategoryTable = () => {
                                 />
                                 <ErrorMessage name="title" component="div" className="text-danger" />
                             </div>
-
                             <div className="mb-3">
-                                <label className="mb-1">Category </label>
+                                <label className="mb-1">Category</label>
                                 <Field
-                                    type="text"
+                                    as="select"
                                     name="category"
                                     className="form-control"
-                                />
+                                >
+                                    <option>Select Category</option>
+                                    {categorydata?.map(items => (
+                                        //  <option value={items?._id}>Select Category</option>
+                                        <option value={items._id} key={items._id}>{items.name}</option>
+                                    ))}
+                                </Field>
                                 <ErrorMessage name="category" component="div" className="text-danger" />
                             </div>
                             <div className="mb-3">
                                 <label className="mb-1">Description</label>
                                 <Field
-                                    type="text"
+                                    type="textarea"
                                     name="description"
                                     className="form-control"
                                 />
                                 <ErrorMessage name="description" component="div" className="text-danger" />
                             </div>
                             <div className="mb-3">
-                                <label className="mb-1">price </label>
+                                <label className="mb-1">Price</label>
                                 <Field
                                     type="text"
                                     name="price"
@@ -303,16 +355,22 @@ const CategoryTable = () => {
                                 <ErrorMessage name="price" component="div" className="text-danger" />
                             </div>
                             <div className="mb-3">
-                                <label className="mb-1">Image </label>
-                                <Field
-                                    type="text"
-                                    name="image"
-                                    className="form-control"
-                                />
+                                <label className="mb-1">Image</label>
+                                <Field name="image">
+                                    {({ field, form }) => (
+                                        <input
+                                            type="file"
+                                            className="form-control"
+                                            onChange={(event) => {
+                                                form.setFieldValue("image", event.currentTarget.files[0]); // Correct way to set file
+                                            }}
+                                        />
+                                    )}
+                                </Field>
                                 <ErrorMessage name="image" component="div" className="text-danger" />
                             </div>
                             <div className="mb-3">
-                                <label className="mb-1">Rating </label>
+                                <label className="mb-1">Rating</label>
                                 <Field
                                     type="text"
                                     name="rating"
@@ -320,7 +378,6 @@ const CategoryTable = () => {
                                 />
                                 <ErrorMessage name="rating" component="div" className="text-danger" />
                             </div>
-
                             <Button color='dark' type='submit' onClick={updateRecord}>Update</Button>
                         </Form>
                     </Formik>
@@ -329,5 +386,6 @@ const CategoryTable = () => {
         </>
     )
 }
-export default CategoryTable
+export default GameTable
+
 

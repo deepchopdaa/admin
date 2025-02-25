@@ -48,6 +48,7 @@ const GameForm = () => {
     } = useForm({ mode: 'onChange', resolver: yupResolver(SignupSchema) });
 
     const onSubmit = async (data) => {
+        console.log(data)
         try {
             const formData = new FormData();
             formData.append("title", data.title);

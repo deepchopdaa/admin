@@ -43,5 +43,20 @@ export default [
     id: "GameFrom",
     title: "GameFrom",
     navLink: '/gameform',
-  }
+  },
+  {
+    id: "contact",
+    title: "contact",
+    navLink: '/contact',
+  },
+  {
+    id: "user",
+    title: "user",
+    navLink: '/user',
+  },
+  {
+    id: "Review",
+    title: "Review",
+    navLink: '/review',
+  },
 ];

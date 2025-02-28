@@ -59,11 +59,10 @@ const Register = () => {
     try {
       await axios.post("http://localhost:3100/admin/addAdmin", values)
       console.log("Admin Register Sucessfully")
-      
+      navigate("/login")
     } catch (e) {
       console.log("Admin Not Register Sucessfully")
     }
-
   }
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
@@ -202,7 +201,7 @@ const Register = () => {
                   />
                   <ErrorMessage name="password" component="div" className="text-danger" />
                 </div>
-                <Button type="submit"  color="primary" block>
+                <Button type="submit" color="primary" block>
                   Sign up
                 </Button>
               </Form>

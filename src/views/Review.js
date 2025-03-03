@@ -41,7 +41,7 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/review/deleteuser/${deleteid}`)
+            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`)
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {

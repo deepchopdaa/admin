@@ -109,7 +109,7 @@ const GameTable = () => {
         const responce = await axios.get("http://localhost:3100/game/getGame")
         setdata(responce.data)
         console.log(responce.data);
-    }
+    }   
     const categoryget = async () => {
         const responsecategory = await axios.get("http://localhost:3100/category/getcategory")
         setcategorydata(responsecategory.data);
@@ -279,7 +279,7 @@ const GameTable = () => {
         <>
             <Card className="overflow-hidden">
                 <CardHeader>
-                    <CardTitle tag="h4">Categories</CardTitle>
+                    <CardTitle tag="h4">Games</CardTitle>
                 </CardHeader>
                 <div className="react-dataTable">
                     <DataTable

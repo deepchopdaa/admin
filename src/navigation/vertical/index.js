@@ -58,4 +58,9 @@ export default [
     title: "Review",
     navLink: '/review',
   },
+  {
+    id: "Ticket",
+    title: "Ticket",
+    navLink: '/ticket',
+  },
 ];

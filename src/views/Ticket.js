@@ -15,22 +15,23 @@ import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedba
 import axios from 'axios'
 
 
-const CategoryTable = () => {
+const Ticket = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
     const handleShow1 = () => setShow1(true);
     const [show, setShow] = useState(false);
     const [updateid, setupdateid] = useState();
     const [name, setname] = useState();
+    const [username, setusername] = useState();
+    const [gamename, setgamename] = useState();
     const [description, setdescription] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [deleteid, setdeleteid] = useState(null)
     const navigate = useNavigate('/');
-    const [user, setUser] = useState(true);
+
     const [currentPage, setCurrentPage] = useState(0)
     const [data, setdata] = useState();
-    const [status,setstatus] = useState("active")
 
     const handlePagination = page => {
         setCurrentPage(page.selected)
@@ -38,7 +39,7 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`)
+            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`)
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -46,29 +47,63 @@ const CategoryTable = () => {
         }
     }
 
+    const userget = async () => {
+        const responsecategory = await axios.get("http://localhost:3100/user/getuser")
+        setusername(responsecategory.data);
+        console.log(categorydata)
+        console.log(responsecategory.data)
+    }
+
+    const gameget = async () => {
+        const responsecategory = await axios.get("http://localhost:3100/game/getgame")
+        setgamename(responsecategory.data);
+        console.log(categorydata)
+        console.log(responsecategory.data)
+    }
+
+    const getUserName = (userId) => {
+        if (!username || username.length === 0) return "Unknown User"; // Handle null/empty data
+
+        console.log("User List:", username);
+        console.log("Searching for User ID:", userId);
+
+        // Find user by ID
+        const user = username.find(user => user._id.toString() === userId.toString());
+
+        console.log("Found User:", user);
+        return user ? user.name : "Unknown User";
+    };
+
+    const getGameName = (gameId) => {
+        if (!gamename || gamename.length === 0) return "Unknown Game"; // Handle null/empty data
+
+        console.log("Game List:", gamename);
+        console.log("Searching for Game ID:", gameId);
+
+        // Find game by ID
+        const game = gamename.find(game => game._id.toString() === gameId.toString());
+        console.log("Found Game:", game);
+        return game ? game.title : "Unknown Game";
+    };
+
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/user/getuser")
+        const responce = await axios.get("http://localhost:3100/ticket/getticket")
         setdata(responce.data)
         console.log(responce.data);
     }
 
-    const handleDelete = async (row) => {
-        console.log(row)
-        try {
-            const responce = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`,{},{new:true})
-            console.log(responce.data)
-            let status1 = responce.data
-            console.log(status1.status)
-            setstatus(status1.status)
-            console.log(status)
-        } catch (e) {
-            console.log("Status Update Error")
-        }
+    const handleDelete = (row) => {
+        console.log("Delete clicked for:", row);
+        setdeleteid(row._id);
+        handleShow();
+        get();
     };
 
     useEffect(() => {
         try {
             get();
+            userget();
+            gameget();
         } catch (e) {
             console.log("data not fatched sucessfully")
         }
@@ -76,28 +111,49 @@ const CategoryTable = () => {
 
     const reOrderColumns = [
         {
-            name: 'Name',
+            name: 'User Name',
             reorder: true,
             sortable: true,
             minwidth: '100px',
             maxWidth: '200px',
-            selector: row => row.name
+            selector: row => getUserName(row.user_id)
         },
         {
-            name: 'email',
+            name: 'Game Name',
             reorder: true,
             sortable: true,
-            minwidth: '150px',
-            maxWidth: '250px',
-            selector: row => row.email
+            minwidth: '100px',
+            maxWidth: '200px',
+            selector: row => getGameName(row.Game_id)
         },
         {
-            name: "Status",
+            name: 'Price',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',
+            maxWidth: '200px',
+            selector: row => row.price
+        },
+        {
+            name: "Accept",
             cell: (row) => (
                 <div className='flex-row'>
-                    <Button color="warning" style={{ maxWidth: '130px', textWrap: "nowrap" }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        {status}
-                     </Button>
+                    <Button color="success" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
+                        <Trash2 size={10} /> Accept
+                    </Button>
+                </div>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+        {
+            name: "Reject",
+            cell: (row) => (
+                <div className='flex-row'>
+                    <Button color="danger" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
+                        <Trash2 size={10} /> Reject
+                    </Button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -107,6 +163,8 @@ const CategoryTable = () => {
     ]
 
     /* Update form */
+
+    
 
     // ** Custom Pagination
     const CustomPagination = () => (
@@ -131,14 +189,13 @@ const CategoryTable = () => {
             containerClassName='pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1'
         />
     )
-
     return (
         <>
             <Card className='overflow-hidden'>
                 <CardHeader>
-                    <CardTitle tag='h4'>User Detail</CardTitle>
+                    <CardTitle tag='h4'>User Ticket</CardTitle>
                 </CardHeader>
-                <div className='react-dataTable'>    
+                <div className='react-dataTable'>
                     <DataTable
                         pagination
                         data={data}
@@ -152,9 +209,22 @@ const CategoryTable = () => {
                 </div>
             </Card>
 
-
+            <Modal show={show} onHide={handleClose} animation={false}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are You sure to delete record ?</Modal.Body>
+                <Modal.Footer>
+                    <Button color="secondary" onClick={handleClose}>
+                        No
+                    </Button>
+                    <Button color="primary" onClick={DeleteRecord}>
+                        Yes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }
-export default CategoryTable
+export default Ticket
 

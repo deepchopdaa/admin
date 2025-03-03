@@ -25,7 +25,6 @@ const CategoryTable = () => {
     const [username, setusername] = useState();
     const [gamename, setgamename] = useState();
 
-
     const [description, setdescription] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -171,18 +170,7 @@ const CategoryTable = () => {
 
     /* Update form */
 
-    const initialvalue = {
-        name: name,
-        description: description
-    }
-
-    const validationSchema = Yup.object().shape({
-        name: Yup.string()
-            .required('Required name'),
-        description: Yup.string()
-            .required('Required description'),
-    });
-
+ 
     // ** Custom Pagination
     const CustomPagination = () => (
         <ReactPaginate

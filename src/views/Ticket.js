@@ -79,7 +79,6 @@ const Ticket = () => {
 
         console.log("Game List:", gamename);
         console.log("Searching for Game ID:", gameId);
-
         // Find game by ID
         const game = gamename.find(game => game._id.toString() === gameId.toString());
         console.log("Found Game:", game);
@@ -101,7 +100,7 @@ const Ticket = () => {
 
     useEffect(() => {
         try {
-            get();
+            get();  
             userget();
             gameget();
         } catch (e) {
@@ -127,12 +126,20 @@ const Ticket = () => {
             selector: row => getGameName(row.Game_id)
         },
         {
-            name: 'Price',
+            name: 'SeatNumber',
             reorder: true,
             sortable: true,
             minwidth: '100px',
             maxWidth: '200px',
-            selector: row => row.price
+            selector: row => row.SeatNumber
+        },
+        {
+            name: 'Amount',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',
+            maxWidth: '200px',
+            selector: row => row.amount
         },
         {
             name: "Accept",
@@ -164,7 +171,6 @@ const Ticket = () => {
 
     /* Update form */
 
-    
 
     // ** Custom Pagination
     const CustomPagination = () => (

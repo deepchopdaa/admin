@@ -28,7 +28,12 @@ const GameForm = () => {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const response = await axios.get("http://localhost:3100/category/getcategory");
+                const response = await axios.get("http://localhost:3100/category/getcategory",{
+                    headers: {
+                        "content-type": "application/json",
+                        Authorization: "Bearer " + localStorage.getItem("token")
+                    }
+                });
                 setCategory(response.data);
                 console.log(response)
             } catch (error) {
@@ -65,8 +70,10 @@ const GameForm = () => {
             // API Call
             const response = await axios.post("http://localhost:3100/game/addGame", formData, {
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
+                    Authorization: "Bearer " + localStorage.getItem("token")
                 }
+                
             });
 
             console.log("Game added:", response.data);

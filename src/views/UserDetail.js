@@ -30,15 +30,20 @@ const CategoryTable = () => {
     const [user, setUser] = useState(true);
     const [currentPage, setCurrentPage] = useState(0)
     const [data, setdata] = useState();
-    const [status,setstatus] = useState("active")
+    const [status, setstatus] = useState("active")
 
     const handlePagination = page => {
         setCurrentPage(page.selected)
-    }
+    }       
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`)
+            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`,{
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -47,7 +52,12 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/user/getuser")
+        const responce = await axios.get("http://localhost:3100/user/getuser",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setdata(responce.data)
         console.log(responce.data);
     }
@@ -55,7 +65,12 @@ const CategoryTable = () => {
     const handleDelete = async (row) => {
         console.log(row)
         try {
-            const responce = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`,{},{new:true})
+            const responce = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`,{}, {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            }, { new: true })
             console.log(responce.data)
             let status1 = responce.data
             console.log(status1.status)
@@ -65,14 +80,13 @@ const CategoryTable = () => {
             console.log("Status Update Error")
         }
     };
-
     useEffect(() => {
         try {
             get();
         } catch (e) {
             console.log("data not fatched sucessfully")
         }
-    }, [])
+    },[])
 
     const reOrderColumns = [
         {
@@ -97,7 +111,7 @@ const CategoryTable = () => {
                 <div className='flex-row'>
                     <Button color="warning" style={{ maxWidth: '130px', textWrap: "nowrap" }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
                         {status}
-                     </Button>
+                    </Button>
                 </div>
             ),
             ignoreRowClick: true,
@@ -138,7 +152,7 @@ const CategoryTable = () => {
                 <CardHeader>
                     <CardTitle tag='h4'>User Detail</CardTitle>
                 </CardHeader>
-                <div className='react-dataTable'>    
+                <div className='react-dataTable'>
                     <DataTable
                         pagination
                         data={data}
@@ -151,8 +165,6 @@ const CategoryTable = () => {
                     />
                 </div>
             </Card>
-
-
         </>
     )
 }

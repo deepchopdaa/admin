@@ -28,6 +28,10 @@ import {
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
 
 const UserDropdown = () => {
+
+  const logouthandle = () => {
+      localStorage.removeItem("token");
+  }
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
       <DropdownToggle
@@ -37,17 +41,16 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">John Doe</span>
           <span className="user-status">Admin</span>
         </div>
-        <Avatar
+         <Avatar
           img={defaultAvatar}
           imgHeight="40"
           imgWidth="40"
           status="online"
         />
-      </DropdownToggle>
-      <DropdownMenu end>
+      </DropdownToggle> 
+      <DropdownMenu end> {/*}
         <DropdownItem tag={Link} to="/" onClick={(e) => e.preventDefault()}>
           <User size={14} className="me-75" />
           <span className="align-middle">Profile</span>
@@ -80,8 +83,8 @@ const UserDropdown = () => {
         <DropdownItem tag={Link} to="/" onClick={(e) => e.preventDefault()}>
           <HelpCircle size={14} className="me-75" />
           <span className="align-middle">FAQ</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to="/login">
+        </DropdownItem> */}
+        <DropdownItem tag={Link} to="/login" onClick={logouthandle}>
           <Power size={14} className="me-75" />
           <span className="align-middle">Logout</span>
         </DropdownItem>

@@ -32,7 +32,12 @@ const ValidationOnChange = (props) => {
     const onSubmit = async (data) => {
         console.log(data)
         try {
-            await axios.post("http://localhost:3100/category/addcategory", data);
+            await axios.post("http://localhost:3100/category/addcategory", data, {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            });
             if (Object.values(data).every(field => field.length > 0)) {
                 toast(
                     <div className='d-flex'>

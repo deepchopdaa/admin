@@ -52,7 +52,7 @@ const Login = () => {
       let token = responce.data
       window.localStorage.setItem("token",token.token)
       console.log("Admin Login Sucessfully")
-      // navigate("/login")
+      navigate("/login")
     } catch (e) {
       console.log("Admin Not Login Sucessfully")
     }
@@ -195,10 +195,6 @@ const Login = () => {
                 </Button>
               </Form>
             </Formik>
-
-
-
-
             
             <p className="text-center mt-2">
               <span className="me-25">New on our platform?</span>

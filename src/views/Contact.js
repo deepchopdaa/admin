@@ -39,7 +39,12 @@ const CategoryTable = () => {
     
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/contact/deletecontact/${deleteid}`)
+            await axios.delete(`http://localhost:3100/contact/deletecontact/${deleteid}`,{
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -48,7 +53,12 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/contact/getcontact")
+        const responce = await axios.get("http://localhost:3100/contact/getcontact",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setdata(responce.data)
         console.log(responce.data);
     }

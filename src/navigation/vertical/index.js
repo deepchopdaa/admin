@@ -1,7 +1,7 @@
 import { Mail, Home } from "react-feather";
 
 export default [
-  {
+ /*  {
     id: "home",
     title: "Home",
     icon: <Home size={20} />,
@@ -12,7 +12,7 @@ export default [
     title: "Second Page",
     icon: <Mail size={20} />,
     navLink: "/second-page",
-  },
+  }, */
   {
     id: "LoginPage",
     title: "Login",
@@ -63,4 +63,5 @@ export default [
     title: "Ticket",
     navLink: '/ticket',
   },
+  
 ];

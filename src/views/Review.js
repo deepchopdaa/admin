@@ -40,7 +40,12 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`)
+            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`,{
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -49,14 +54,24 @@ const CategoryTable = () => {
     }
 
     const userget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/user/getuser")
+        const responsecategory = await axios.get("http://localhost:3100/user/getuser",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setusername(responsecategory.data);
         console.log(categorydata)
         console.log(responsecategory.data)
     }
 
     const gameget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/game/getgame")
+        const responsecategory = await axios.get("http://localhost:3100/game/getgame",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setgamename(responsecategory.data);
         console.log(categorydata)
         console.log(responsecategory.data)
@@ -90,7 +105,12 @@ const CategoryTable = () => {
 
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/review/getreview")
+        const responce = await axios.get("http://localhost:3100/review/getreview",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setdata(responce.data)
         console.log(responce.data);
     }

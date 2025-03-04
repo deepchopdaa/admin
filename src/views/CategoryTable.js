@@ -50,7 +50,12 @@ const CategoryTable = () => {
         try {
             console.log(value);
             console.log(updateid)
-            await axios.put(`http://localhost:3100/category/updatecategory/${updateid}`, value)
+            await axios.put(`http://localhost:3100/category/updatecategory/${updateid}`, value, {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record updated sucessfully")
             handleClose(false);
         } catch (e) {
@@ -60,7 +65,12 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/category/deletecategory/${deleteid}`)
+            await axios.delete(`http://localhost:3100/category/deletecategory/${deleteid}`, {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -69,14 +79,18 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/category/getcategory")
+        const responce = await axios.get("http://localhost:3100/category/getcategory", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setdata(responce.data)
         console.log(responce.data);
     }
 
     const addrecord = () => {
         navigate("/categoryform");
-
     }
 
     const handleDelete = (row) => {

@@ -39,7 +39,12 @@ const Ticket = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`)
+            await axios.delete(`http://localhost:3100/ticket/deleteticket/${deleteid}`,{
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -48,14 +53,24 @@ const Ticket = () => {
     }
 
     const userget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/user/getuser")
+        const responsecategory = await axios.get("http://localhost:3100/user/getuser",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setusername(responsecategory.data);
         console.log(categorydata)
         console.log(responsecategory.data)
     }
 
     const gameget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/game/getgame")
+        const responsecategory = await axios.get("http://localhost:3100/game/getgame",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setgamename(responsecategory.data);
         console.log(categorydata)
         console.log(responsecategory.data)
@@ -86,7 +101,12 @@ const Ticket = () => {
     };
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/ticket/getticket")
+        const responce = await axios.get("http://localhost:3100/ticket/getticket",{
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }   
+        })
         setdata(responce.data)
         console.log(responce.data);
     }
@@ -146,7 +166,7 @@ const Ticket = () => {
             cell: (row) => (
                 <div className='flex-row'>
                     <Button color="success" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        <Trash2 size={10} /> Accept
+                        Accept
                     </Button>
                 </div>
             ),
@@ -159,7 +179,7 @@ const Ticket = () => {
             cell: (row) => (
                 <div className='flex-row'>
                     <Button color="danger" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        <Trash2 size={10} /> Reject
+                        Reject
                     </Button>
                 </div>
             ),

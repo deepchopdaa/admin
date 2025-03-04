@@ -71,7 +71,6 @@ const GameTable = () => {
             formData.append("description", data?.description || "");
             formData.append("price", data?.price || "");
             formData.append("rating", data?.rating || "");
-
             // Append image only if it's a valid file
             if (data?.image instanceof File) {
                 formData.append("image", data.image);
@@ -80,12 +79,11 @@ const GameTable = () => {
             }
             console.log("Update ID:", updateid);
             console.log("FormData:", formData);
-
             // Send PUT request with multipart form-data
             const response = await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+                headers: { "Content-Type": "multipart/form-data",
+                Authorization: "Bearer " + localStorage.getItem("token") },
             });
-
             console.log("Record updated successfully", response.data);
             handleClose(false);
         } catch (error) {
@@ -97,7 +95,12 @@ const GameTable = () => {
     const DeleteRecord = async () => {
         try {
             console.log(deleteid)
-            await axios.delete(`http://localhost:3100/game/deleteGame/${deleteid}`)
+            await axios.delete(`http://localhost:3100/game/deleteGame/${deleteid}`, {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            })
             console.log("Record deleted sucessfully")
             handleClose();
         } catch (e) {
@@ -106,12 +109,22 @@ const GameTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/game/getGame")
-        setdata(responce.data)
+        const responce = await axios.get("http://localhost:3100/game/getGame", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
+        setdata(responce.data)  
         console.log(responce.data);
-    }   
+    }
     const categoryget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/category/getcategory")
+        const responsecategory = await axios.get("http://localhost:3100/category/getcategory", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
         setcategorydata(responsecategory.data);
         console.log(categorydata)
         console.log(responsecategory.data)
@@ -153,7 +166,7 @@ const GameTable = () => {
             minwidth: '100px',
             maxWidth: '150px',
             selector: row => row.title
-        },  
+        },
         {
             name: 'category',
             reorder: true,
@@ -291,7 +304,7 @@ const GameTable = () => {
                         paginationComponentOptions={{ rowsPerPageText: "Rows per page:" }}
                         paginationDefaultPage={currentPage + 1}
                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
-                        responsive 
+                        responsive
                         highlightOnHover
                     />
                 </div>
@@ -328,7 +341,7 @@ const GameTable = () => {
                     <Formik
                         initialValues={initialvalue}
                         validationSchema={validationSchema}
-                        onSubmit={(values) => updateRecord(values, updateid)} 
+                        onSubmit={(values) => updateRecord(values, updateid)}
                     >
                         {({ setFieldValue }) => (
                             <Form>
@@ -366,7 +379,7 @@ const GameTable = () => {
                                     <input
                                         type="file"
                                         className="form-control"
-                                        onChange={(event) => setFieldValue("image", event.currentTarget.files[0])} 
+                                        onChange={(event) => setFieldValue("image", event.currentTarget.files[0])}
                                     />
                                     <ErrorMessage name="image" component="div" className="text-danger" />
                                 </div>
@@ -377,7 +390,7 @@ const GameTable = () => {
                                     <ErrorMessage name="rating" component="div" className="text-danger" />
                                 </div>
 
-                                <Button color='dark' type='submit'>Update</Button> 
+                                <Button color='dark' type='submit'>Update</Button>
                             </Form>
                         )}
                     </Formik>

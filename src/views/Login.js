@@ -24,6 +24,7 @@ import {
 import illustrationsLight from "@src/assets/images/pages/login-v2.svg";
 import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 import { Formik, Form, Field, ErrorMessage } from "formik"
+import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 import * as Yup from 'yup';
 // ** Styles
@@ -48,15 +49,19 @@ const Login = () => {
   const LoginAdmin = async (values) => {
     console.log("Admin Login Data = ", values);
     try {
-      const responce  = await axios.post("http://localhost:3100/admin/login", values)
-      let token = responce.data
-      window.localStorage.setItem("token",token.token)
-      console.log("Admin Login Sucessfully")
-      navigate("/home")
+      const responce = await axios.post("http://localhost:3100/admin/login", values)
+      let data = responce.data
+      let token = data.token
+      if (token !== undefined) {
+        window.localStorage.setItem("token", token);
+        toast.success("Admin Login Successfully");
+        navigate("/home")
+      } else {
+        toast.error("User Details Wrong");
+      }
     } catch (e) {
       console.log("Admin Not Login Sucessfully")
     }
-
   }
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
@@ -143,7 +148,7 @@ const Login = () => {
           lg="4"
           sm="12"
         >
-          <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12"> 
+          <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="fw-bold mb-1">
               Welcome to Admin Login! 👋
             </CardTitle>
@@ -169,7 +174,7 @@ const Login = () => {
                 </div>
                 <div className="mb-1">
                   <div className="d-flex justify-content-between">
-                    <label className="form-label" for="login-password"> 
+                    <label className="form-label" for="login-password">
                       Password
                     </label>
                     <Link to="/forgot-password">
@@ -183,7 +188,7 @@ const Login = () => {
                     className="form-control"
                     id="login-password"
                   />
-                </div>  
+                </div>
                 {/* <div className="form-check mb-1">
                 <Input type="checkbox" id="remember-me" />
                 <Label className="form-check-label" for="remember-me">
@@ -195,7 +200,7 @@ const Login = () => {
                 </Button>
               </Form>
             </Formik>
-            
+
             <p className="text-center mt-2">
               <span className="me-25">New on our platform?</span>
               <Link to="/register">
@@ -222,6 +227,7 @@ const Login = () => {
           </Col>
         </Col>
       </Row>
+      <ToastContainer />
     </div>
   );
 };

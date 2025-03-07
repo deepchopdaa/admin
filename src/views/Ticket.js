@@ -81,7 +81,6 @@ const Ticket = () => {
 
         console.log("User List:", username);
         console.log("Searching for User ID:", userId);
-
         // Find user by ID
         const user = username.find(user => user._id.toString() === userId.toString());
 
@@ -98,7 +97,7 @@ const Ticket = () => {
         const game = gamename.find(game => game._id.toString() === gameId.toString());
         console.log("Found Game:", game);
         return game ? game.title : "Unknown Game";
-    };
+    };  
 
     const get = async () => {
         const responce = await axios.get("http://localhost:3100/ticket/getticket",{
@@ -111,6 +110,9 @@ const Ticket = () => {
         console.log(responce.data);
     }
 
+    const handlAccept = ()=>{
+
+    }
     const handleDelete = (row) => {
         console.log("Delete clicked for:", row);
         setdeleteid(row._id);
@@ -124,7 +126,7 @@ const Ticket = () => {
             userget();
             gameget();
         } catch (e) {
-            console.log("data not fatched sucessfully")
+            console.log("data not fatched sucessfully") 
         }
     }, [])
 
@@ -165,7 +167,7 @@ const Ticket = () => {
             name: "Accept",
             cell: (row) => (
                 <div className='flex-row'>
-                    <Button color="success" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
+                    <Button color="success" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handlAccept(row)}>
                         Accept
                     </Button>
                 </div>

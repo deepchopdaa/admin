@@ -1,6 +1,6 @@
 // ** React Imports
 import { useSkin } from "@hooks/useSkin";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
@@ -31,7 +31,7 @@ import "@styles/react/pages/page-authentication.scss";
 
 const Login = () => {
   const { skin } = useSkin();
-
+  const navigate = useNavigate("/")
   const initialvalue = {
     email: "",
     password: ""
@@ -52,7 +52,7 @@ const Login = () => {
       let token = responce.data
       window.localStorage.setItem("token",token.token)
       console.log("Admin Login Sucessfully")
-      navigate("/login")
+      navigate("/home")
     } catch (e) {
       console.log("Admin Not Login Sucessfully")
     }

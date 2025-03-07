@@ -13,7 +13,7 @@ export default [
     icon: <Mail size={20} />,
     navLink: "/second-page",
   }, */
-  {
+  /* {
     id: "LoginPage",
     title: "Login",
     navLink: "/login",
@@ -21,13 +21,13 @@ export default [
   {
     id: "RegisterPage",
     title: "Register",
-    navLink: "/register",
-  },
+    navLink: "/register",s
+  }, */
   {
     id: "CategoryForm",
     title: "CategoryForm",
     navLink: '/categoryform'
-  },
+  },  
   {
     id: "Category",
     title: "Category",

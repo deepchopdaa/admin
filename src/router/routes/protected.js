@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
           };
     })
     console.log(children)
-    return isAuthenticated() ? children : <Navigate to="/login" />;
+    return isAuthenticated() ? children : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;

@@ -24,7 +24,7 @@ const getLayout = {
 const TemplateTitle = "%s - Vuexy React Admin Template";
 
 // ** Default Route
-const DefaultRoute = "/home";
+const DefaultRoute = "/login";
 
 const Home = lazy(() => import("../../views/Home"));
 const SecondPage = lazy(() => import("../../views/SecondPage"));
@@ -52,7 +52,7 @@ const Routes = [
   },
   {
     path: "/home",
-    element: <Home />,
+    element: <Home />,  
   },
   {
     path: "/second-page",
@@ -60,35 +60,35 @@ const Routes = [
   },
   {
     path: "/categoryform",
-    element:<CategoryFrom /> ,
+    element: localStorage.getItem("token") ? <CategoryFrom /> : <Login />,
   },
   {
     path: "/category",
-    element: <CategoryTable />,
+    element: localStorage.getItem("token") ? <CategoryTable /> : <Login />,
   },
   {
-    path: "/game",
-    element: <GameTable />, 
+    path: "/game",  
+    element: localStorage.getItem("token") ? <GameTable /> : <Login />,
   },
   {
     path: "/user",
-    element: <User />,
+    element: localStorage.getItem("token") ? <User /> : <Login />,
   },
   {
     path: "/review",
-    element: <Review />,
+    element: localStorage.getItem("token") ?<Review />:<Login/>,
   },
   {
     path: "/gameform",
-    element: <GameFrom />,
+    element: localStorage.getItem("token") ?<GameFrom />:<Login/>,
   },
   {
-    path: "/contact",
-    element: <Contact />,
+    path: "/contact", 
+    element: localStorage.getItem("token") ?<Contact />:<Login/>,
   },
   {
     path: "/ticket",
-    element: <Ticket />,
+    element: localStorage.getItem("token") ?<Ticket />:<Login/>,
   },
   {
     path: "/login",

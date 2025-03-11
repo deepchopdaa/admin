@@ -171,7 +171,7 @@ const Ticket = () => {
                         Accept
                     </Button>
                 </div>
-            ),
+            ),                          
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,

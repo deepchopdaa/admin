@@ -15,7 +15,7 @@ import { Edit, Trash2 } from "react-feather";
 // import { Button, Card, CardHeader, CardTitle } from 'reactstrap'
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedback } from 'reactstrap'
 import axios from 'axios'
-
+import "./Table.css"
 
 const CategoryTable = () => {
     const [show1, setShow1] = useState(false);
@@ -160,6 +160,8 @@ const CategoryTable = () => {
         description: description
     }
 
+    const bg= localStorage.getItem("skin")
+
     const validationSchema = Yup.object().shape({
         name: Yup.string()
             .required('Required name'),
@@ -201,7 +203,7 @@ const CategoryTable = () => {
                         pagination
                         data={data}
                         columns={reOrderColumns}
-                        className='react-dataTable'
+                        className='react-dataTable bgdark'
                         sortIcon={<ChevronDown size={10} />}
                         paginationComponent={CustomPagination}
                         paginationDefaultPage={currentPage + 1}

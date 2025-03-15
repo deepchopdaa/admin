@@ -107,7 +107,7 @@ const Ticket = () => {
             }   
         })
         setdata(responce.data)
-        console.log(responce.data);
+        console.log(responce.data , "<------ Ticket Data Responce --->");
     }
 
     const handlAccept = ()=>{
@@ -164,30 +164,20 @@ const Ticket = () => {
             selector: row => row.amount
         },
         {
-            name: "Accept",
-            cell: (row) => (
-                <div className='flex-row'>
-                    <Button color="success" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handlAccept(row)}>
-                        Accept
-                    </Button>
-                </div>
-            ),                          
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
+            name: 'Time Slot',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',
+            maxWidth: '200px',
+            selector: row => row.time_slot
         },
         {
-            name: "Reject",
-            cell: (row) => (
-                <div className='flex-row'>
-                    <Button color="danger" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        Reject
-                    </Button>
-                </div>
-            ),
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
+            name: 'Date',
+            reorder: true,
+            sortable: true,
+            minwidth: '100px',
+            maxWidth: '200px',
+            selector: row => row.date
         }
     ]
 
@@ -236,7 +226,6 @@ const Ticket = () => {
                     />
                 </div>
             </Card>
-
             <Modal show={show} onHide={handleClose} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>Delete</Modal.Title>

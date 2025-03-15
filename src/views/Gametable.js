@@ -192,7 +192,7 @@ const GameTable = () => {
             selector: row => <img
                 src={`http://localhost:3100/${row.image}`} // Fetch from local uploads folder
                 alt={row.title}
-                style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "5px" }}
+                style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "5px" }}
             />
         },
         {

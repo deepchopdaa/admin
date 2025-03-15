@@ -34,11 +34,11 @@ const CategoryTable = () => {
 
     const handlePagination = page => {
         setCurrentPage(page.selected)
-    }       
+    }
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`,{
+            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -52,7 +52,7 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/user/getuser",{
+        const responce = await axios.get("http://localhost:3100/user/getuser", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -62,31 +62,36 @@ const CategoryTable = () => {
         console.log(responce.data);
     }
 
-    const handleDelete = async (row) => {
+    const handlestatus = async (row) => {
         console.log(row)
         try {
-            const responce = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`,{}, {
+            const response = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`, {}, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
-            }, { new: true })
-            console.log(responce.data)
-            let status1 = responce.data
-            console.log(status1.status)
-            setstatus(status1.status)
-            console.log(status)
+            });
+
+            console.log(response.data);
+            const updatedStatus = response.data.status;
+            setdata(prevData =>
+                prevData.map(user =>
+                    user._id === row._id ? { ...user, status: updatedStatus } : user
+                )
+            );
+
         } catch (e) {
-            console.log("Status Update Error")
+            console.log("Status Update Error");
         }
     };
+
     useEffect(() => {
         try {
             get();
         } catch (e) {
             console.log("data not fatched sucessfully")
         }
-    },[])
+    }, [])
 
     const reOrderColumns = [
         {
@@ -109,8 +114,14 @@ const CategoryTable = () => {
             name: "Status",
             cell: (row) => (
                 <div className='flex-row'>
-                    <Button color="warning" style={{ maxWidth: '130px', textWrap: "nowrap" }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        {status}
+                    <Button
+                        color="warning"
+                        style={{ maxWidth: '130px', textWrap: "nowrap" }}
+                        size="sm"
+                        className="ms-2"
+                        onClick={() => handlestatus(row)}
+                    >
+                        {row.status}
                     </Button>
                 </div>
             ),

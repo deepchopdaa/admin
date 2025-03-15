@@ -172,19 +172,6 @@ const CategoryTable = () => {
             minwidth: '150px',
             maxWidth: '300px',
             selector: row => row.date
-        },
-        {
-            name: "Delete",
-            cell: (row) => (
-                <div className='flex-row'>
-                    <Button color="danger" style={{ maxWidth: '100px' }} size="sm" className="ms-2" onClick={() => handleDelete(row)}>
-                        <Trash2 size={10} /> Delete
-                    </Button>
-                </div>
-            ),
-            ignoreRowClick: true,
-            allowOverflow: true,
-            button: true,
         }
     ]
 

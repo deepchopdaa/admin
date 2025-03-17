@@ -57,7 +57,7 @@ const Login = () => {
         toast.success("Admin Login Successfully");
         navigate("/home")
       } else {
-        toast.error("User Details Wrong");
+        toast.error("Admin Details Wrong");
       }
     } catch (e) {
       console.log("Admin Not Login Sucessfully")
@@ -201,12 +201,12 @@ const Login = () => {
               </Form>
             </Formik>
 
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               <span className="me-25">New on our platform?</span>
               <Link to="/register">
                 <span>Create an account</span>
               </Link>
-            </p>
+            </p> */}
             <div className="divider my-2">
               <div className="divider-text">or</div>
             </div>

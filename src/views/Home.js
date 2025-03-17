@@ -1,55 +1,43 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardLink,
-} from "reactstrap";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 const Home = () => {
+  const [category, setcategory] = useState();
+  const [game, setgame] = useState()
+  const [contact, setcontact] = useState()
+  const [review, setreview] = useState()
+  const [ticket, setticket] = useState()
+  const [user, setuser] = useState();
+  const [allcount, setallcount] = useState(null)
+  const GetCount = () => {
+    axios.get("http://localhost:3100/admin/getCount").then((count) => {
+      setallcount(count.data);
+      setcategory(count.data.category);
+      setgame(count.data.game)
+      setcontact(count.data.contact)
+      setreview(count.data.review)
+      setuser(count.data.user)
+      setticket(count.data.ticket)
+      console.log(count.data)
+    }).catch((e) => {
+      console.log("Data Count Getting Error", e);
+    })
+  }
+  useEffect(() => {
+    GetCount();
+  }, [])
   return (
     <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Kick start your project 🚀</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>All the best for your new project.</CardText>
-          <CardText>
-            Please make sure to read our{" "}
-            <CardLink
-              href="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/"
-              target="_blank"
-            >
-              Template Documentation
-            </CardLink>{" "}
-            to understand where to go from here and how to use our template.
-          </CardText>
-        </CardBody>
-      </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Want to integrate JWT? 🔒</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <CardText>
-            We carefully crafted JWT flow so you can implement JWT with ease and
-            with minimum efforts.
-          </CardText>
-          <CardText>
-            Please read our{" "}
-            <CardLink
-              href="https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/docs/development/auth"
-              target="_blank"
-            >
-              JWT Documentation
-            </CardLink>{" "}
-            to get more out of JWT authentication.
-          </CardText>
-        </CardBody>
-      </Card>
+      
+      <h6>{category}</h6>
+      <h6>{game}</h6>
+      <h6>{review}</h6>
+      <h6>{contact}</h6>
+      <h6>{user}</h6>
+      <h6>{ticket}</h6>
+      
     </div>
   );
 };

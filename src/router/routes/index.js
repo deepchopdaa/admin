@@ -1,18 +1,14 @@
-// ** React Imports
 import { Fragment, lazy } from "react";
 import { Navigate } from "react-router-dom";
-// ** Layouts
 import BlankLayout from "@layouts/BlankLayout";
 import VerticalLayout from "@src/layouts/VerticalLayout";
 import HorizontalLayout from "@src/layouts/HorizontalLayout";
 import LayoutWrapper from "@src/@core/layouts/components/layout-wrapper";
-
-// ** Route Components
 import PublicRoute from "@components/routes/PublicRoute";
-
-
-// ** Utils
 import { isObjEmpty } from "@utils";
+
+// ** Protected Route Import
+import ProtectedRoute from "./protected"; 
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -20,179 +16,82 @@ const getLayout = {
   horizontal: <HorizontalLayout />,
 };
 
-// ** Document title
 const TemplateTitle = "%s - Vuexy React Admin Template";
-
-// ** Default Route
 const DefaultRoute = "/login";
 
+// ** Lazy Loaded Components
 const Home = lazy(() => import("../../views/Home"));
 const SecondPage = lazy(() => import("../../views/SecondPage"));
 const Login = lazy(() => import("../../views/Login"));
 const Register = lazy(() => import("../../views/Register"));
 const ForgotPassword = lazy(() => import("../../views/ForgotPassword"));
 const Error = lazy(() => import("../../views/Error"));
-const CategoryFrom = lazy(() => import("../../views/CategoryForm"))
-const CategoryTable = lazy(() => import("../../views/CategoryTable"))
-const GameTable = lazy(() => import("../../views/Gametable"))
-const GameFrom = lazy(() => import("../../views/GameForm"))
-const Contact = lazy(() => import("../../views/Contact"))
-const User = lazy(() => import("../../views/UserDetail"))
-const Review = lazy(() => import("../../views/Review"))
-const Ticket = lazy(() => import("../../views/Ticket"))
-const NotFound = lazy(() => import("../../views/NotFound"))
-const ProtectedRoute = lazy(() => import("./protected"))
+const CategoryForm = lazy(() => import("../../views/CategoryForm"));
+const CategoryTable = lazy(() => import("../../views/CategoryTable"));
+const GameTable = lazy(() => import("../../views/Gametable"));
+const GameForm = lazy(() => import("../../views/GameForm"));
+const Contact = lazy(() => import("../../views/Contact"));
+const User = lazy(() => import("../../views/UserDetail"));
+const Review = lazy(() => import("../../views/Review"));
+const Ticket = lazy(() => import("../../views/Ticket"));
+const NotFound = lazy(() => import("../../views/NotFound"));
 
-// ** Merge Routes
+// ** Routes
 const Routes = [
-  {
-    path: "/",
-    index: true,
-    element: <Navigate replace to={DefaultRoute} />,
-  },
-  {
-    path: "/home",
-    element: <Home />,  
-  },
-  {
-    path: "/second-page",
-    element: <SecondPage />,
-  },
-  {
-    path: "/categoryform",
-    element: localStorage.getItem("token") ? <CategoryFrom /> : <Login />,
-  },
-  {
-    path: "/category",
-    element: localStorage.getItem("token") ? <CategoryTable /> : <Login />,
-  },
-  {
-    path: "/game",  
-    element: localStorage.getItem("token") ? <GameTable /> : <Login />,
-  },
-  {
-    path: "/user",
-    element: localStorage.getItem("token") ? <User /> : <Login />,
-  },
-  {
-    path: "/review",
-    element: localStorage.getItem("token") ?<Review />:<Login/>,
-  },
-  {
-    path: "/gameform",
-    element: localStorage.getItem("token") ?<GameFrom />:<Login/>,
-  },
-  {
-    path: "/contact", 
-    element: localStorage.getItem("token") ?<Contact />:<Login/>,
-  },
-  {
-    path: "/ticket",
-    element: localStorage.getItem("token") ?<Ticket />:<Login/>,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/register",
-    element: <Register />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/error",
-    element: <Error />,
-    meta: {
-      layout: "blank",
-    },
-  },
-  {
-    path: "/*",
-    element: <NotFound />,
-  },
+  { path: "/", index: true, element: <Navigate replace to={DefaultRoute} /> },
+  { path: "/home", element: <ProtectedRoute><Home /></ProtectedRoute> },
+  { path: "/second-page", element: <ProtectedRoute><SecondPage /></ProtectedRoute> },
+  { path: "/categoryform", element: <ProtectedRoute><CategoryForm /></ProtectedRoute> },
+  { path: "/category", element: <ProtectedRoute><CategoryTable /></ProtectedRoute> },
+  { path: "/game", element: <ProtectedRoute><GameTable /></ProtectedRoute> },
+  { path: "/user", element: <ProtectedRoute><User /></ProtectedRoute> },
+  { path: "/review", element: <ProtectedRoute><Review /></ProtectedRoute> },
+  { path: "/gameform", element: <ProtectedRoute><GameForm /></ProtectedRoute> },
+  { path: "/contact", element: <ProtectedRoute><Contact /></ProtectedRoute> },
+  { path: "/ticket", element: <ProtectedRoute><Ticket /></ProtectedRoute> },
+  { path: "/login", element: <Login />, meta: { layout: "blank" } },
+  { path: "/register", element: <Register />, meta: { layout: "blank" } },
+  { path: "/forgot-password", element: <ForgotPassword />, meta: { layout: "blank" } },
+  { path: "/error", element: <Error />, meta: { layout: "blank" } },
+  { path: "/*", element: <NotFound /> },
 ];
 
 const getRouteMeta = (route) => {
   if (isObjEmpty(route.element.props)) {
-    if (route.meta) {
-      return { routeMeta: route.meta };
-    } else {
-      return {};
-    }
+    return route.meta ? { routeMeta: route.meta } : {};
   }
 };
 
 // ** Return Filtered Array of Routes & Paths
 const MergeLayoutRoutes = (layout, defaultLayout) => {
-  const LayoutRoutes = [];
-
-  if (Routes) {
-    Routes.filter((route) => {
-      let isBlank = false;
-      // ** Checks if Route layout or Default layout matches current layout
-      if (
-        (route.meta && route.meta.layout && route.meta.layout === layout) ||
-        ((route.meta === undefined || route.meta.layout === undefined) &&
-          defaultLayout === layout)
-      ) {
-        const RouteTag = PublicRoute;
-
-        // ** Check for public or private route
-        if (route.meta) {
-          route.meta.layout === "blank" ? (isBlank = true) : (isBlank = false);
-        }
-        if (route.element) {
-          const Wrapper =
-            // eslint-disable-next-line multiline-ternary
-            isObjEmpty(route.element.props) && isBlank === false
-              ? // eslint-disable-next-line multiline-ternary
-              LayoutWrapper
-              : Fragment;
-
-          route.element = (
-            <Wrapper {...(isBlank === false ? getRouteMeta(route) : {})}>
-              <RouteTag route={route}>{route.element}</RouteTag>
-            </Wrapper>
-          );
-        }
-
-        // Push route to LayoutRoutes
-        LayoutRoutes.push(route);
-      }
-      return LayoutRoutes;
-    });
-  }
-  return LayoutRoutes;
+  return Routes.filter((route) => {
+    let isBlank = false;
+    if (
+      (route.meta && route.meta.layout === layout) ||
+      (!route.meta?.layout && defaultLayout === layout)
+    ) {
+      const RouteTag = PublicRoute;
+      isBlank = route.meta?.layout === "blank";
+      const Wrapper = isObjEmpty(route.element.props) && !isBlank ? LayoutWrapper : Fragment;
+      route.element = (
+        <Wrapper {...(!isBlank ? getRouteMeta(route) : {})}>
+          <RouteTag route={route}>{route.element}</RouteTag>
+        </Wrapper>
+      );
+      return true;
+    }
+    return false;
+  });
 };
 
 const getRoutes = (layout) => {
   const defaultLayout = layout || "vertical";
   const layouts = ["vertical", "horizontal", "blank"];
-
-  const AllRoutes = [];
-
-  layouts.forEach((layoutItem) => {
-    const LayoutRoutes = MergeLayoutRoutes(layoutItem, defaultLayout);
-
-    AllRoutes.push({
-      path: "/",
-      element: getLayout[layoutItem] || getLayout[defaultLayout],
-      children: LayoutRoutes,
-    });
-  });
-  return AllRoutes;
+  return layouts.map((layoutItem) => ({
+    path: "/",
+    element: getLayout[layoutItem] || getLayout[defaultLayout],
+    children: MergeLayoutRoutes(layoutItem, defaultLayout),
+  }));
 };
 
 export { DefaultRoute, TemplateTitle, Routes, getRoutes };

@@ -24,19 +24,19 @@ export default [
     navLink: "/register",s
   }, */
   {
-    id: "CategoryForm",
-    title: "CategoryForm",
-    navLink: '/categoryform'
-  },  
-  {
     id: "Category",
     title: "Category",
     navLink: '/category',
   }, 
   {
+    id: "CategoryForm",
+    title: "CategoryForm",
+    navLink: '/categoryform'
+  },  
+  {
     id: "Game",
     title: "Game",
-    navLink: '/game',
+    navLink: '/game', 
   }, 
   {
     id: "GameFrom",
@@ -63,5 +63,4 @@ export default [
     title: "Ticket",
     navLink: '/ticket',
   },
-  
 ];

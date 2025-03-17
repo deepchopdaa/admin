@@ -39,30 +39,29 @@ const ValidationOnChange = (props) => {
                 }
             });
             if (Object.values(data).every(field => field.length > 0)) {
-                toast(
-                    <div className='d-flex'>
-                        <div className='me-1'>
-                            <Avatar size='sm' color='success' icon={<Check size={12} />} />
-                        </div>
-                        <div className='d-flex flex-column'>
-                            <h6>Form Submitted!</h6>
-                            <ul className='list-unstyled mb-0'>
-                                <li>
-                                    <strong>Name</strong>: {data.name}
-                                </li>
-                                <li>
-                                    <strong>Description</strong>: {data.description}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                )
+                toast.success("category Added Successfully")
+                {/* <div className='d-flex'>
+                            <div className='me-1'>
+                                <Avatar size='sm' color='success' icon={<Check size={12} />} />
+                            </div>
+                            <div className='d-flex flex-column'>
+                                <h6>Form Submitted!</h6>
+                                <ul className='list-unstyled mb-0'>
+                                    <li>
+                                        <strong>Name</strong>: {data.name}
+                                    </li>
+                                    <li>
+                                        <strong>Description</strong>: {data.description}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> */}
                 navigate("/category")
             }
         } catch (e) {
-            toast(
+            toast.error(
                 <div className='d-flex'>
-                    <p>Form not submited {e}</p>
+                    <p>Category Not Added {e}</p>
                 </div>
             )
         }
@@ -117,6 +116,7 @@ const ValidationOnChange = (props) => {
                     </div>
                 </Form>
             </CardBody>
+        {/*     <ToastContainer /> */}
         </Card>
     )
 }

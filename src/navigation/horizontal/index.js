@@ -23,16 +23,16 @@ export default [
     id: "RegisterPage",
     title: "Register",
     navLink: "/register",
-  }, */
-  {
-    id: "CategoryForm",
-    title: "CategoryForm",
-    navLink: '/categoryform',
-  },
+    }, */
   {
     id: "Category",
     title: "Category",
     navLink: '/category',
+  },
+  {
+    id: "CategoryForm",
+    title: "CategoryForm",
+    navLink: '/categoryform',
   },
   {
     id: "Game",
@@ -64,5 +64,5 @@ export default [
     title: "Ticket",
     navLink: '/ticket',
   },
-  
+
 ];

@@ -57,7 +57,7 @@ const CategoryTable = () => {
                 }
             })
             console.log("Record updated sucessfully")
-            handleClose(false);
+            handleClose();
         } catch (e) {
             console.log("Record not updated")
         }
@@ -160,7 +160,7 @@ const CategoryTable = () => {
         description: description
     }
 
-    const bg= localStorage.getItem("skin")
+    const bg = localStorage.getItem("skin")
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -194,6 +194,9 @@ const CategoryTable = () => {
     )
     return (
         <>
+            <div className='text-center p-1 pt-0' >
+                <Button color='success' onClick={addrecord}>Add New</Button>
+            </div>
             <Card className='overflow-hidden'>
                 <CardHeader>
                     <CardTitle tag='h4'>Categories</CardTitle>
@@ -210,9 +213,7 @@ const CategoryTable = () => {
                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
                     />
                 </div>
-                <div className='text-center p-5 pt-0' >
-                    <Button color='success' onClick={addrecord}>Add New</Button>
-                </div>
+
             </Card>
 
             <Modal show={show} onHide={handleClose} animation={false}>

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody, Button, Form, Label, Input, FormFeedback } from 'reactstrap';
+import toast from 'react-hot-toast';
 
 const GameForm = () => {
     const navigate = useNavigate();
@@ -75,7 +76,7 @@ const GameForm = () => {
                 }
                 
             });
-
+            toast.success("Game Added Sucessfully")
             console.log("Game added:", response.data);
             reset(); // Reset form after submission
         } catch (error) {
@@ -191,6 +192,7 @@ const GameForm = () => {
                     </div>
                 </Form>
             </CardBody>
+   {/*          <ToastContainer /> */}
         </Card>
     );
 };

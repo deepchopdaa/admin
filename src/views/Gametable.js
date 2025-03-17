@@ -81,11 +81,13 @@ const GameTable = () => {
             console.log("FormData:", formData);
             // Send PUT request with multipart form-data
             const response = await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, formData, {
-                headers: { "Content-Type": "multipart/form-data",
-                Authorization: "Bearer " + localStorage.getItem("token") },
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                },
             });
             console.log("Record updated successfully", response.data);
-            handleClose(false);
+            handleClose();
         } catch (error) {
             console.error("Record not updated:", error);
         }
@@ -115,7 +117,7 @@ const GameTable = () => {
                 Authorization: "Bearer " + localStorage.getItem("token")
             }
         })
-        setdata(responce.data)  
+        setdata(responce.data)
         console.log(responce.data);
     }
     const categoryget = async () => {
@@ -290,10 +292,14 @@ const GameTable = () => {
     )
     return (
         <>
+            <div className="text-center p-1 pt-0">
+                <Button color="success" onClick={addrecord}>Add New</Button>
+            </div>
             <Card className="overflow-hidden">
                 <CardHeader>
                     <CardTitle tag="h4">Games</CardTitle>
                 </CardHeader>
+
                 <div className="react-dataTable">
                     <DataTable
                         pagination
@@ -308,9 +314,7 @@ const GameTable = () => {
                         highlightOnHover
                     />
                 </div>
-                <div className="text-center p-5 pt-0">
-                    <Button color="success" onClick={addrecord}>Add New</Button>
-                </div>
+
             </Card>
 
             <Modal show={show} onHide={handleClose} animation={false}>

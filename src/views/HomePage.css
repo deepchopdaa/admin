@@ -1,0 +1,31 @@
+.container1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .card1 {
+    background: #e9e8e8;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(43, 41, 41, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card1:hover {
+    transform: scale(1.05);
+  }
+  
+  .lable1 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .value1 {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  

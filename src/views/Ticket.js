@@ -36,7 +36,6 @@ const Ticket = () => {
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
     const DeleteRecord = async () => {
         try {
             await axios.delete(`http://localhost:3100/ticket/deleteticket/${deleteid}`,{

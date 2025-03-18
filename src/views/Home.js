@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import HomePage from "./HomePage";
+import { t } from "i18next";
 
 
 const Home = () => {
@@ -29,15 +31,9 @@ const Home = () => {
   }, [])
   return (
     <div>
-
-      
-      <h6>{category}</h6>
-      <h6>{game}</h6>
-      <h6>{review}</h6>
-      <h6>{contact}</h6>
-      <h6>{user}</h6>
-      <h6>{ticket}</h6>
-      
+      <div className="min-h-screen flex justify-center items-center bg-gray-900">
+        <HomePage category={category} game={game} review={review} contact={contact} user={user} ticket={ticket} />
+      </div>
     </div>
   );
 };

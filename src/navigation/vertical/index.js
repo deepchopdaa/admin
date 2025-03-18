@@ -24,6 +24,11 @@ export default [
     navLink: "/register",s
   }, */
   {
+    id: "Dashboard",
+    title: "Dashboard",
+    navLink: '/home',
+  },
+  {
     id: "Category",
     title: "Category",
     navLink: '/category',

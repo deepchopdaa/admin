@@ -213,7 +213,6 @@ const CategoryTable = () => {
                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
                     />
                 </div>
-
             </Card>
 
             <Modal show={show} onHide={handleClose} animation={false}>

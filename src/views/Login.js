@@ -56,8 +56,8 @@ const Login = () => {
         window.localStorage.setItem("token", token);
         toast.success("Admin Login Successfully");
         navigate("/home")
-      } else {  
-        toast.error("Admin Details Wrong"); 
+      } else {
+        toast.error("Admin Details Wrong");
       }
     } catch (e) {
       console.log("Admin Not Login Sucessfully")
@@ -76,7 +76,7 @@ const Login = () => {
                 x1="100%"
                 y1="10.5120544%"
                 x2="50%"
-                y2="89.4879456%"  
+                y2="89.4879456%"
                 id="linearGradient-1"
               >
                 <stop stopColor="#000000" offset="0%"></stop>

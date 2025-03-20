@@ -7,10 +7,13 @@
       color: $theme-dark-body-color;
     }
   }
-
+  .caQqyd:not(:last-of-type),.caQqyd ,.kqWIVd,.gocYik,.isyjeR:not(:last-of-type),.isyjeR,.card1
+  {
+    background-color: rgb(40 48 70) !important;
+    color: #d0d2d6  !important;
+  }
   // ** App Invoice
-  .invoice-edit,
-  .invoice-add {
+  .invoice-edit,.invoice-add {
     .invoice-edit-input-group .input-group-text {
       border-right-color: $theme-dark-card-bg !important;
     }

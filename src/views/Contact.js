@@ -42,10 +42,11 @@ const CategoryTable = () => {
             await axios.delete(`http://localhost:3100/contact/deletecontact/${deleteid}`,{
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("token")
+                    Authorization: "Bearer " + localStorage.getItem("token")    
                 }
             })
             console.log("Record deleted sucessfully")
+            setdata(preData => preData.filter(contact=>contact._id !== deleteid))
             handleClose();
         } catch (e) {
             console.log("Record not deleted")

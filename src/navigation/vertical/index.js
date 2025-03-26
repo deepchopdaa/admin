@@ -1,18 +1,18 @@
 import { Mail, Home } from "react-feather";
 
 export default [
- /*  {
-    id: "home",
-    title: "Home",
-    icon: <Home size={20} />,
-    navLink: "/home",
-  },
-  {
-    id: "secondPage",
-    title: "Second Page",
-    icon: <Mail size={20} />,
-    navLink: "/second-page",
-  }, */
+  /*  {
+     id: "home",
+     title: "Home",
+     icon: <Home size={20} />,
+     navLink: "/home",
+   },
+   {
+     id: "secondPage",
+     title: "Second Page",
+     icon: <Mail size={20} />,
+     navLink: "/second-page",
+   }, */
   /* {
     id: "LoginPage",
     title: "Login",
@@ -32,21 +32,31 @@ export default [
     id: "Category",
     title: "Category",
     navLink: '/category',
-  }, 
+  },
   {
     id: "CategoryForm",
     title: "CategoryForm",
     navLink: '/categoryform'
-  },  
+  },
   {
     id: "Game",
     title: "Game",
-    navLink: '/game', 
-  }, 
+    navLink: '/game',
+  },
   {
     id: "GameFrom",
     title: "GameFrom",
     navLink: '/gameform',
+  },
+  {
+    id: "Slider",
+    title: "Slider",
+    navLink: '/slider',
+  },
+  {
+    id: "SliderForm",
+    title: "SliderForm",
+    navLink: '/sliderForm',
   },
   {
     id: "contact",
@@ -68,4 +78,5 @@ export default [
     title: "Ticket",
     navLink: '/ticket',
   },
+  
 ];

@@ -87,6 +87,11 @@ const GameTable = () => {
                 },
             });
             console.log("Record updated successfully", response.data);
+            setdata(prevGames =>
+                prevGames.map(game =>
+                    game._id === updateid ? { ...game, ...response.data.updatedGame } : game
+                )
+            );
             handleClose();
         } catch (error) {
             console.error("Record not updated:", error);
@@ -104,6 +109,7 @@ const GameTable = () => {
                 }
             })
             console.log("Record deleted sucessfully")
+            setdata(prevGames => prevGames.filter(game => game._id !== deleteid))
             handleClose();
         } catch (e) {
             console.log("Record not deleted")
@@ -112,7 +118,7 @@ const GameTable = () => {
 
     const get = async () => {
         const responce = await axios.get("http://localhost:3100/game/getGame", {
-            headers: {
+            headers: {  
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
             }
@@ -293,7 +299,7 @@ const GameTable = () => {
     return (
         <>
             <div className="text-center p-1 pt-0">
-                <Button color="success" onClick={addrecord}>Add New</Button>
+                <Button className='bg-gray' onClick={addrecord}>Add New</Button>
             </div>
             <Card className="overflow-hidden">
                 <CardHeader>
@@ -339,7 +345,7 @@ const GameTable = () => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update category</Modal.Title>
+                    <Modal.Title>Update Game</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Formik

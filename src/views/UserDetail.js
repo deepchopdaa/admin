@@ -115,10 +115,9 @@ const CategoryTable = () => {
             cell: (row) => (
                 <div className='flex-row'>
                     <Button
-                        color="warning"
                         style={{ maxWidth: '130px', textWrap: "nowrap" }}
                         size="sm"
-                        className="ms-2"
+                        className="ms-2 bg-gray"
                         onClick={() => handlestatus(row)}
                     >
                         {row.status}

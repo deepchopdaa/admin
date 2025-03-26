@@ -34,6 +34,8 @@ const Contact = lazy(() => import("../../views/Contact"));
 const User = lazy(() => import("../../views/UserDetail"));
 const Review = lazy(() => import("../../views/Review"));
 const Ticket = lazy(() => import("../../views/Ticket"));
+const Slider = lazy(() => import("../../views/Slider"));
+const SliderForm = lazy(() => import("../../views/SliderForm"));
 const NotFound = lazy(() => import("../../views/NotFound"));
 
 // ** Routes
@@ -49,6 +51,8 @@ const Routes = [
   { path: "/gameform", element: <ProtectedRoute><GameForm /></ProtectedRoute> },
   { path: "/contact", element: <ProtectedRoute><Contact /></ProtectedRoute> },
   { path: "/ticket", element: <ProtectedRoute><Ticket /></ProtectedRoute> },
+  { path: "/slider", element: <ProtectedRoute><Slider /></ProtectedRoute> },
+  { path: "/sliderform", element: <ProtectedRoute><SliderForm /></ProtectedRoute> },
   { path: "/login", element: <Login />, meta: { layout: "blank" } },
   { path: "/register", element: <Register />, meta: { layout: "blank" } },
   { path: "/forgot-password", element: <ForgotPassword />, meta: { layout: "blank" } },

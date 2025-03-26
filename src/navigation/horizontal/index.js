@@ -50,6 +50,16 @@ export default [
     navLink: '/gameform',
   },
   {
+    id: "Slider",
+    title: "Slider",
+    navLink: '/slider',
+  },
+  {
+    id: "SliderForm",
+    title: "SliderForm",
+    navLink: '/sliderForm',
+  },
+  {
     id: "contact",
     title: "contact",
     navLink: '/contact',
@@ -69,5 +79,6 @@ export default [
     title: "Ticket",
     navLink: '/ticket',
   },
+  
 
 ];

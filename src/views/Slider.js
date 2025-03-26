@@ -9,22 +9,24 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import ReactPaginate from 'react-paginate'
 import { ChevronDown, Table } from 'react-feather'
 import DataTable from 'react-data-table-component'
-import CategoryForm from "./CategoryForm"
+
 import { Edit, Trash2 } from "react-feather";
 // ** Reactstrap Imports
 // import { Button, Card, CardHeader, CardTitle } from 'reactstrap'
 import { Card, CardHeader, CardTitle, CardBody, Button, Label, Input, FormFeedback } from 'reactstrap'
 import axios from 'axios'
-import "./Table.css"
 
-const CategoryTable = () => {
+
+const GameTable = () => {
     const [show1, setShow1] = useState(false);
     const handleClose1 = () => setShow1(false);
     const handleShow1 = () => setShow1(true);
     const [show, setShow] = useState(false);
+    const [categorydata, setcategorydata] = useState(null);
     const [updateid, setupdateid] = useState();
-    const [name, setname] = useState();
-    const [description, setdescription] = useState();
+    const [title, settitle] = useState();
+    const [image, setimage] = useState(null);
+    const [deleteitem, setdeleteitem] = useState();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [deleteid, setdeleteid] = useState(null)
@@ -37,47 +39,66 @@ const CategoryTable = () => {
     const handlePagination = page => {
         setCurrentPage(page.selected)
     }
-
+    console.log(categorydata, "categorydatacategorydatacategorydatacategorydata")
     const handleEdit = (row) => {
         console.log("Edit clicked for:", row);
         setupdateid(row._id)
-        setname(row.name)
-        setdescription(row.description)
+        settitle(row.title)
+        setimage(row.image)
         handleShow1();
     };
 
-    const updateRecord = async (value) => {
+    const updateRecord = async (data, updateid) => {
         try {
-            console.log(value);
-            console.log(updateid)
-            await axios.put(`http://localhost:3100/category/updatecategory/${updateid}`, value, {
+            if (!updateid) {
+                console.error("Update ID is missing");
+                return;
+            }   
+            console.log("Updating Record:", data);
+
+            // Ensure FormData is populated correctly
+            const formData = new FormData();
+            formData.append("title", data?.title || "");
+
+            // Append image only if it's a valid file
+            if (data?.image instanceof File) {
+                formData.append("image", data.image);
+            } else if (data?.image && data?.image.file instanceof File) {
+                formData.append("image", data.image.file);
+            }
+            console.log("Update ID:", updateid);
+            console.log("FormData:", formData);
+            // Send PUT request with multipart form-data
+            const response = await axios.put(`http://localhost:3100/slider/updateimage/${updateid}`, formData, {
                 headers: {
-                    "content-type": "application/json",
+                    "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")
-                }
-            })
-            console.log("Record updated sucessfully")
-            setdata(prevCategories =>
-                prevCategories.map(category =>
-                    category._id === updateid ? { ...category, ...value } : category
+                },
+            });
+            console.log("Record updated successfully", response.data);
+            setdata(prevSliders =>
+                prevSliders.map(slider =>
+                    slider._id === updateid ? { ...slider, ...response.data } : slider
                 )
             );
             handleClose();
-        } catch (e) {
-            console.log("Record not updated")
+        } catch (error) {
+            console.error("Record not updated:", error);
         }
-    }
+    };
+
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/category/deletecategory/${deleteid}`, {
+            console.log(deleteid)
+            await axios.delete(`http://localhost:3100/slider/deleteimage/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
             })
             console.log("Record deleted sucessfully")
-            setdata(prevCategories => prevCategories.filter(category => category._id !== deleteid));
+            setdata(prevGames => prevGames.filter(game => game._id !== deleteid))
             handleClose();
         } catch (e) {
             console.log("Record not deleted")
@@ -85,7 +106,7 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/category/getcategory", {
+        const responce = await axios.get("http://localhost:3100/slider/getimage", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -96,19 +117,22 @@ const CategoryTable = () => {
     }
 
     const addrecord = () => {
-        navigate("/categoryform");
+        navigate("/sliderform");
     }
 
     const handleDelete = (row) => {
         console.log("Delete clicked for:", row);
         setdeleteid(row._id);
+        setdeleteitem(row)
+        console.log(deleteitem)
         handleShow();
         get();
     };
 
     useEffect(() => {
         try {
-            get();
+            get()
+            categoryget();
         } catch (e) {
             console.log("data not fatched sucessfully")
         }
@@ -116,20 +140,24 @@ const CategoryTable = () => {
 
     const reOrderColumns = [
         {
-            name: 'Name',
+            name: 'Title',
             reorder: true,
             sortable: true,
             minwidth: '100px',
-            maxWidth: '200px',
-            selector: row => row.name
+            maxWidth: '150px',
+            selector: row => row.title
         },
         {
-            name: 'description',
+            name: 'image',
             reorder: true,
             sortable: true,
             minwidth: '150px',
-            maxWidth: '700px',
-            selector: row => row.description
+            maxWidth: '250px',
+            selector: row => <img
+                src={`http://localhost:3100/${row.image}`} // Fetch from local uploads folder
+                alt={row.title}
+                style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "5px" }}
+            />
         },
         {
             name: "Update",
@@ -162,17 +190,17 @@ const CategoryTable = () => {
     /* Update form */
 
     const initialvalue = {
-        name: name,
-        description: description
+        title: title,
+        image: image,
     }
 
-    const bg = localStorage.getItem("skin")
-
     const validationSchema = Yup.object().shape({
-        name: Yup.string()
-            .required('Required name'),
-        description: Yup.string()
-            .required('Required description'),
+        title: Yup.string()
+            .required('Required title'),
+
+        image: Yup.mixed()
+            .required('Required image'),
+
     });
 
     // ** Custom Pagination
@@ -200,25 +228,29 @@ const CategoryTable = () => {
     )
     return (
         <>
-            <div className='text-center p-1 pt-0' >
-                <Button color='success' onClick={addrecord}>Add New</Button>
+            <div className="text-center p-1 pt-0">
+                <Button className='bg-gray' onClick={addrecord}>Add New</Button>
             </div>
-            <Card className='overflow-hidden'>
+            <Card className="overflow-hidden">
                 <CardHeader>
-                    <CardTitle tag='h4'>Categories</CardTitle>
+                    <CardTitle tag="h4">Games</CardTitle>
                 </CardHeader>
-                <div className='react-dataTable'>
+
+                <div className="react-dataTable">
                     <DataTable
                         pagination
                         data={data}
                         columns={reOrderColumns}
-                        className='react-dataTable bgdark'
+                        className="react-dataTable"
                         sortIcon={<ChevronDown size={10} />}
-                        paginationComponent={CustomPagination}
+                        paginationComponentOptions={{ rowsPerPageText: "Rows per page:" }}
                         paginationDefaultPage={currentPage + 1}
                         paginationRowsPerPageOptions={[10, 25, 50, 100]}
+                        responsive
+                        highlightOnHover
                     />
                 </div>
+
             </Card>
 
             <Modal show={show} onHide={handleClose} animation={false}>
@@ -243,36 +275,41 @@ const CategoryTable = () => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update category</Modal.Title>
+                    <Modal.Title>Update Slider</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Formik initialValues={initialvalue} validationSchema={validationSchema} onSubmit={updateRecord}>
-                        <Form>
-                            <div className="mb-3">
-                                <label className="mb-1">Category Name</label>
-                                <Field
-                                    type="text"
-                                    name="name"
-                                    className="form-control"
-                                />
-                                <ErrorMessage name="name" component="div" className="text-danger" />
-                            </div>
-                            <div className="mb-3">
-                                <label className="mb-1">Description</label>
-                                <Field
-                                    type="text"
-                                    name="description"
-                                    className="form-control"
-                                />
-                                <ErrorMessage name="description" component="div" className="text-danger" />
-                            </div>
-                            <Button color='dark' type='submit' onClick={updateRecord}>Update</Button>
-                        </Form>
+                    <Formik
+                        initialValues={initialvalue}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => updateRecord(values, updateid)}
+                    >
+                        {({ setFieldValue }) => (
+                            <Form>
+                                <div className="mb-3">
+                                    <label className="mb-1">Title</label>
+                                    <Field type="text" name="title" className="form-control" />
+                                    <ErrorMessage name="title" component="div" className="text-danger" />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label className="mb-1">Image</label>
+                                    <input
+                                        type="file"
+                                        className="form-control"
+                                        onChange={(event) => setFieldValue("image", event.currentTarget.files[0])}
+                                    />
+                                    <ErrorMessage name="image" component="div" className="text-danger" />
+                                </div>
+                                <Button color='dark' type='submit'>Update</Button>
+                            </Form>
+                        )}
                     </Formik>
+
                 </Modal.Body>
             </Modal>
         </>
     )
 }
-export default CategoryTable
+export default GameTable
+
 

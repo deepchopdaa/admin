@@ -33,7 +33,7 @@ const GameForm = () => {
         try {
             const formData = new FormData();
             formData.append("title", data.title);
-
+            
             // Append the file correctly
             if (data.image && data.image.length > 0) {
                 formData.append("image", data.image[0]); // Correct way to send file

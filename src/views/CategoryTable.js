@@ -62,7 +62,7 @@ const CategoryTable = () => {
                     category._id === updateid ? { ...category, ...value } : category
                 )
             );
-            handleClose();
+            handleClose(true);
         } catch (e) {
             console.log("Record not updated")
         }
@@ -78,7 +78,7 @@ const CategoryTable = () => {
             })
             console.log("Record deleted sucessfully")
             setdata(prevCategories => prevCategories.filter(category => category._id !== deleteid));
-            handleClose();
+            handleClose(true);
         } catch (e) {
             console.log("Record not deleted")
         }

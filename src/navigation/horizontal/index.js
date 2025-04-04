@@ -34,31 +34,31 @@ export default [
     title: "Category",
     navLink: '/category',
   },
-  {
+ /*  {
     id: "CategoryForm",
     title: "CategoryForm",
     navLink: '/categoryform',
-  },
+  }, */
   {
     id: "Game",
     title: "Game",
     navLink: '/game',
   },
-  {
+  /* {
     id: "GameFrom",
     title: "GameFrom",
     navLink: '/gameform',
-  },
+  }, */
   {
     id: "Slider",
     title: "Slider",
     navLink: '/slider',
   },
-  {
+  /* {
     id: "SliderForm",
     title: "SliderForm",
     navLink: '/sliderForm',
-  },
+  }, */
   {
     id: "contact",
     title: "contact",

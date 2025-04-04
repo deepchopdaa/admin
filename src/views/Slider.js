@@ -81,7 +81,7 @@ const GameTable = () => {
                     slider._id === updateid ? { ...slider, ...response.data } : slider
                 )
             );
-            handleClose();
+            handleClose(true);
         } catch (error) {
             console.error("Record not updated:", error);
         }
@@ -99,7 +99,7 @@ const GameTable = () => {
             })
             console.log("Record deleted sucessfully")
             setdata(prevGames => prevGames.filter(game => game._id !== deleteid))
-            handleClose();
+            handleClose(true);
         } catch (e) {
             console.log("Record not deleted")
         }

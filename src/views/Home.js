@@ -13,7 +13,7 @@ const Home = () => {
   const [user, setuser] = useState();
   const [allcount, setallcount] = useState(null)
   const GetCount = () => {
-    axios.get("http://localhost:3100/admin/getCount").then((count) => {
+    axios.get("https://gamezone-r2eq.onrender.com/admin/getCount").then((count) => {
       setallcount(count.data);
       setcategory(count.data.category);
       setgame(count.data.game)

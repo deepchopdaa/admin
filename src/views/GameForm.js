@@ -29,7 +29,7 @@ const GameForm = () => {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const response = await axios.get("http://localhost:3100/category/getcategory", {
+                const response = await axios.get("https://gamezone-r2eq.onrender.com/category/getcategory", {
                     headers: {
                         "content-type": "application/json",
                         Authorization: "Bearer " + localStorage.getItem("token")
@@ -69,7 +69,7 @@ const GameForm = () => {
             }
 
             // API Call
-            const response = await axios.post("http://localhost:3100/game/addGame", formData, {
+            const response = await axios.post("https://gamezone-r2eq.onrender.com/game/addGame", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")

@@ -32,7 +32,7 @@ const ValidationOnChange = (props) => {
     const onSubmit = async (data) => {
         console.log(data)
         try {
-            await axios.post("http://localhost:3100/category/addcategory", data, {
+            await axios.post("https://gamezone-r2eq.onrender.com/category/addcategory", data, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -116,7 +116,7 @@ const ValidationOnChange = (props) => {
                     </div>
                 </Form>
             </CardBody>
-        {/*     <ToastContainer /> */}
+            {/*     <ToastContainer /> */}
         </Card>
     )
 }

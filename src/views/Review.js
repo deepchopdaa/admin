@@ -40,7 +40,7 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/review/deletereview/${deleteid}`,{
+            await axios.delete(`https://gamezone-r2eq.onrender.com/review/deletereview/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -54,7 +54,7 @@ const CategoryTable = () => {
     }
 
     const userget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/user/getuser",{
+        const responsecategory = await axios.get("https://gamezone-r2eq.onrender.com/user/getuser", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -66,7 +66,7 @@ const CategoryTable = () => {
     }
 
     const gameget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/game/getgame",{
+        const responsecategory = await axios.get("https://gamezone-r2eq.onrender.com/game/getgame", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -105,7 +105,7 @@ const CategoryTable = () => {
 
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/review/getreview",{
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/review/getreview", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -177,7 +177,7 @@ const CategoryTable = () => {
 
     /* Update form */
 
- 
+
     // ** Custom Pagination
     const CustomPagination = () => (
         <ReactPaginate

@@ -80,7 +80,7 @@ const GameTable = () => {
             console.log("Update ID:", updateid);
             console.log("FormData:", formData);
             // Send PUT request with multipart form-data    
-            const response = await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, formData, {
+            const response = await axios.put(`https://gamezone-r2eq.onrender.com/game/updateGame/${updateid}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -102,7 +102,7 @@ const GameTable = () => {
     const DeleteRecord = async () => {
         try {
             console.log(deleteid)
-            await axios.delete(`http://localhost:3100/game/deleteGame/${deleteid}`, {
+            await axios.delete(`https://gamezone-r2eq.onrender.com/game/deleteGame/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -117,7 +117,7 @@ const GameTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/game/getGame", {
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/game/getGame", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -127,7 +127,7 @@ const GameTable = () => {
         console.log(responce.data);
     }
     const categoryget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/category/getcategory", {
+        const responsecategory = await axios.get("https://gamezone-r2eq.onrender.com/category/getcategory", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")

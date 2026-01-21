@@ -33,13 +33,13 @@ const GameForm = () => {
         try {
             const formData = new FormData();
             formData.append("title", data.title);
-            
+
             // Append the file correctly
             if (data.image && data.image.length > 0) {
                 formData.append("image", data.image[0]); // Correct way to send file
             }
             // API Call
-            const response = await axios.post("http://localhost:3100/slider/sendimage", formData, {
+            const response = await axios.post("https://gamezone-r2eq.onrender.com/slider/sendimage", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")

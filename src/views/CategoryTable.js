@@ -50,7 +50,7 @@ const CategoryTable = () => {
         try {
             console.log(value);
             console.log(updateid)
-            await axios.put(`http://localhost:3100/category/updatecategory/${updateid}`, value, {
+            await axios.put(`https://gamezone-r2eq.onrender.com/category/updatecategory/${updateid}`, value, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -70,7 +70,7 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/category/deletecategory/${deleteid}`, {
+            await axios.delete(`https://gamezone-r2eq.onrender.com/category/deletecategory/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -85,7 +85,7 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/category/getcategory", {
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/category/getcategory", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")

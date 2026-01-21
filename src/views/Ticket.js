@@ -38,7 +38,7 @@ const Ticket = () => {
     }
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/ticket/deleteticket/${deleteid}`,{
+            await axios.delete(`https://gamezone-r2eq.onrender.com/ticket/deleteticket/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -52,7 +52,7 @@ const Ticket = () => {
     }
 
     const userget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/user/getuser",{
+        const responsecategory = await axios.get("https://gamezone-r2eq.onrender.com/user/getuser", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -64,7 +64,7 @@ const Ticket = () => {
     }
 
     const gameget = async () => {
-        const responsecategory = await axios.get("http://localhost:3100/game/getgame",{
+        const responsecategory = await axios.get("https://gamezone-r2eq.onrender.com/game/getgame", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -96,20 +96,20 @@ const Ticket = () => {
         const game = gamename.find(game => game._id.toString() === gameId.toString());
         console.log("Found Game:", game);
         return game ? game.title : "Unknown Game";
-    };  
+    };
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/ticket/getticket",{
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/ticket/getticket", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
-            }   
+            }
         })
         setdata(responce.data)
-        console.log(responce.data , "<------ Ticket Data Responce --->");
+        console.log(responce.data, "<------ Ticket Data Responce --->");
     }
 
-    const handlAccept = ()=>{
+    const handlAccept = () => {
 
     }
     const handleDelete = (row) => {
@@ -121,11 +121,11 @@ const Ticket = () => {
 
     useEffect(() => {
         try {
-            get();  
+            get();
             userget();
             gameget();
         } catch (e) {
-            console.log("data not fatched sucessfully") 
+            console.log("data not fatched sucessfully")
         }
     }, [])
 

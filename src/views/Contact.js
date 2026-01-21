@@ -36,17 +36,17 @@ const CategoryTable = () => {
         setCurrentPage(page.selected)
     }
 
-    
+
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/contact/deletecontact/${deleteid}`,{
+            await axios.delete(`https://gamezone-r2eq.onrender.com/contact/deletecontact/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
-                    Authorization: "Bearer " + localStorage.getItem("token")    
+                    Authorization: "Bearer " + localStorage.getItem("token")
                 }
             })
             console.log("Record deleted sucessfully")
-            setdata(preData => preData.filter(contact=>contact._id !== deleteid))
+            setdata(preData => preData.filter(contact => contact._id !== deleteid))
             handleClose();
         } catch (e) {
             console.log("Record not deleted")
@@ -54,7 +54,7 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/contact/getcontact",{
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/contact/getcontact", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -199,7 +199,7 @@ const CategoryTable = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-           
+
         </>
     )
 }

@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 // ** Icons Imports
 import Avatar from '@components/avatar'
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
-import { Formik,Form, Field, ErrorMessage } from "formik"
+import { Formik, Form, Field, ErrorMessage } from "formik"
 import axios from "axios";
 import * as Yup from 'yup';
 // ** Custom Components
@@ -57,7 +57,7 @@ const Register = () => {
   const RegisterAdmin = async (values) => {
     console.log("Admin Register Data = ", values);
     try {
-      await axios.post("http://localhost:3100/admin/addAdmin", values)
+      await axios.post("https://gamezone-r2eq.onrender.com/admin/addAdmin", values)
       console.log("Admin Register Sucessfully")
       navigate("/login")
     } catch (e) {

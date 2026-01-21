@@ -69,7 +69,7 @@ const GameTable = () => {
             console.log("Update ID:", updateid);
             console.log("FormData:", formData);
             // Send PUT request with multipart form-data
-            const response = await axios.put(`http://localhost:3100/slider/updateimage/${updateid}`, formData, {
+            const response = await axios.put(`https://gamezone-r2eq.onrender.com/slider/updateimage/${updateid}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -91,7 +91,7 @@ const GameTable = () => {
     const DeleteRecord = async () => {
         try {
             console.log(deleteid)
-            await axios.delete(`http://localhost:3100/slider/deleteimage/${deleteid}`, {
+            await axios.delete(`https://gamezone-r2eq.onrender.com/slider/deleteimage/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -106,7 +106,7 @@ const GameTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/slider/getimage", {
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/slider/getimage", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")

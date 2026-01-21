@@ -49,7 +49,7 @@ const Login = () => {
   const LoginAdmin = async (values) => {
     console.log("Admin Login Data = ", values);
     try {
-      const responce = await axios.post("http://localhost:3100/admin/login", values)
+      const responce = await axios.post("https://gamezone-r2eq.onrender.com/admin/login", values)
       let data = responce.data
       let token = data.token
       if (token !== undefined) {

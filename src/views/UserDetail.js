@@ -38,7 +38,7 @@ const CategoryTable = () => {
 
     const DeleteRecord = async () => {
         try {
-            await axios.delete(`http://localhost:3100/user/deleteuser/${deleteid}`, {
+            await axios.delete(`https://gamezone-r2eq.onrender.com/user/deleteuser/${deleteid}`, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")
@@ -52,7 +52,7 @@ const CategoryTable = () => {
     }
 
     const get = async () => {
-        const responce = await axios.get("http://localhost:3100/user/getuser", {
+        const responce = await axios.get("https://gamezone-r2eq.onrender.com/user/getuser", {
             headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
@@ -65,7 +65,7 @@ const CategoryTable = () => {
     const handlestatus = async (row) => {
         console.log(row)
         try {
-            const response = await axios.put(`http://localhost:3100/user/updatestatus/${row._id}`, {}, {
+            const response = await axios.put(`https://gamezone-r2eq.onrender.com/user/updatestatus/${row._id}`, {}, {
                 headers: {
                     "content-type": "application/json",
                     Authorization: "Bearer " + localStorage.getItem("token")

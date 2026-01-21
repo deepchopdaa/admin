@@ -29,7 +29,7 @@ const GameForm = () => {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const response = await axios.get("http://localhost:3100/category/getcategory",{
+                const response = await axios.get("http://localhost:3100/category/getcategory", {
                     headers: {
                         "content-type": "application/json",
                         Authorization: "Bearer " + localStorage.getItem("token")
@@ -74,7 +74,7 @@ const GameForm = () => {
                     "Content-Type": "multipart/form-data",
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
-                
+
             });
             toast.success("Game Added Sucessfully")
             console.log("Game added:", response.data);
@@ -192,7 +192,7 @@ const GameForm = () => {
                     </div>
                 </Form>
             </CardBody>
-   {/*          <ToastContainer /> */}
+            {/*          <ToastContainer /> */}
         </Card>
     );
 };

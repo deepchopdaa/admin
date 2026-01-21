@@ -79,7 +79,7 @@ const GameTable = () => {
             }
             console.log("Update ID:", updateid);
             console.log("FormData:", formData);
-            // Send PUT request with multipart form-data
+            // Send PUT request with multipart form-data    
             const response = await axios.put(`http://localhost:3100/game/updateGame/${updateid}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -118,7 +118,7 @@ const GameTable = () => {
 
     const get = async () => {
         const responce = await axios.get("http://localhost:3100/game/getGame", {
-            headers: {  
+            headers: {
                 "content-type": "application/json",
                 Authorization: "Bearer " + localStorage.getItem("token")
             }
@@ -198,7 +198,7 @@ const GameTable = () => {
             minwidth: '150px',
             maxWidth: '250px',
             selector: row => <img
-                src={`http://localhost:3100/${row.image}`} // Fetch from local uploads folder
+                src={row?.image} // Fetch from local uploads folder
                 alt={row.title}
                 style={{ width: "100px", height: "100px", objectFit: "cover", borderRadius: "5px" }}
             />
